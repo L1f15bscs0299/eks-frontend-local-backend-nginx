@@ -16,3 +16,21 @@ Backend must listen on all interfaces.
 Test:
 ```bash
 curl -i http://localhost:8080/health
+
+Troubleshooting
+
+If curl from the cluster to <LAPTOP_IP>:8080 fails, the cluster cannot reach your laptop IP (routing/firewall/VPN).
+
+Ensure backend binds to 0.0.0.0, not 127.0.0.1.
+
+If your laptop IP changes, update Endpoints:
+
+./scripts/update-endpoints-ip.sh default <NEW_IP> 8080
+
+
+---
+
+## The one thing that can still “cause errors”
+Your laptop IP can change (DHCP/VPN). If it changes, update the Endpoints (script included). That’s the tradeoff of “no tunnels and no infra.”
+
+If you tell me your backend port and your frontend domain path (do you want `/api` or `/backend`?), I’ll tailor the YAMLs exactly to your case.
